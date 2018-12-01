@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		EB352BF321AED00C005DE079 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB352BF221AED00C005DE079 /* main.cpp */; };
+		EB352BFB21AED0A1005DE079 /* Config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB352BF921AED0A1005DE079 /* Config.cpp */; };
+		EB352BFE21B01156005DE079 /* IPPMException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB352BFC21B01156005DE079 /* IPPMException.cpp */; };
+		EB352C0121B02E06005DE079 /* Sender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB352BFF21B02E06005DE079 /* Sender.cpp */; };
+		EB352C0421B178F5005DE079 /* libpcap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EB352C0321B178F5005DE079 /* libpcap.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +29,13 @@
 /* Begin PBXFileReference section */
 		EB352BEF21AED00C005DE079 /* IPPacketMirror */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = IPPacketMirror; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB352BF221AED00C005DE079 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		EB352BF921AED0A1005DE079 /* Config.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Config.cpp; sourceTree = "<group>"; };
+		EB352BFA21AED0A1005DE079 /* Config.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Config.hpp; sourceTree = "<group>"; };
+		EB352BFC21B01156005DE079 /* IPPMException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IPPMException.cpp; sourceTree = "<group>"; };
+		EB352BFD21B01156005DE079 /* IPPMException.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IPPMException.hpp; sourceTree = "<group>"; };
+		EB352BFF21B02E06005DE079 /* Sender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Sender.cpp; sourceTree = "<group>"; };
+		EB352C0021B02E06005DE079 /* Sender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Sender.hpp; sourceTree = "<group>"; };
+		EB352C0321B178F5005DE079 /* libpcap.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libpcap.tbd; path = usr/lib/libpcap.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB352C0421B178F5005DE079 /* libpcap.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +55,7 @@
 			children = (
 				EB352BF121AED00C005DE079 /* IPPacketMirror */,
 				EB352BF021AED00C005DE079 /* Products */,
+				EB352C0221B178F5005DE079 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,8 +71,22 @@
 			isa = PBXGroup;
 			children = (
 				EB352BF221AED00C005DE079 /* main.cpp */,
+				EB352BF921AED0A1005DE079 /* Config.cpp */,
+				EB352BFA21AED0A1005DE079 /* Config.hpp */,
+				EB352BFC21B01156005DE079 /* IPPMException.cpp */,
+				EB352BFD21B01156005DE079 /* IPPMException.hpp */,
+				EB352BFF21B02E06005DE079 /* Sender.cpp */,
+				EB352C0021B02E06005DE079 /* Sender.hpp */,
 			);
 			path = IPPacketMirror;
+			sourceTree = "<group>";
+		};
+		EB352C0221B178F5005DE079 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EB352C0321B178F5005DE079 /* libpcap.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,7 +145,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB352C0121B02E06005DE079 /* Sender.cpp in Sources */,
 				EB352BF321AED00C005DE079 /* main.cpp in Sources */,
+				EB352BFB21AED0A1005DE079 /* Config.cpp in Sources */,
+				EB352BFE21B01156005DE079 /* IPPMException.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
