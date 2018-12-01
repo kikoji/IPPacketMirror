@@ -39,7 +39,7 @@ int setAddr( std::string str, Config::AddrInfo& info ){
 
 Config::Config( int argc, const char* argv[] ){
     if( argc <= 1 ){
-        IPPMException except("not enough parameter\n\nusage\n ippm <foward-addr:port> dev=<dev> p=<protocol> src=<addr:port> dst=<adr:port>\n\n ex-1.>ippm 192.168.1.1:9000 dev=en0 p=tcp src=192.168.1.1:80 dst=192.168.1.1:8000\n ex-2.>ippm 192.168.1.1:9000 dst=:8000  (defalut protoco is udp. default dev is en0. destination port=8000 filter)\n") ;
+        IPPMException except("not enough parameter\n\nusage\n ippm <foward-addr:port> dev=<dev> p=[udp/tcp] src=<addr:port> dst=<adr:port> print=[on/off/full]<\n\n ex-1.>ippm 192.168.1.1:9000 dev=en0 p=tcp src=192.168.1.1:80 dst=192.168.1.1:8000 print=off\n ex-2.>ippm 192.168.1.1:9000 dst=:8000  (defalut protoco is udp. default dev is en0. default print is on. destination port=8000 filter)\n") ;
         throw except ;
     };
     
@@ -53,7 +53,7 @@ Config::Config( int argc, const char* argv[] ){
     destination.addr.s_addr = 0 ;
     source.addr.s_addr = 0 ;
     dev = "en0" ;
-    print = false ;
+    print = ePrint ;
     for( int k = 2 ; k < argc ; k++ ){
         std::string param( argv[k] ) ;
         unsigned long pos = param.find('=');
@@ -73,7 +73,13 @@ Config::Config( int argc, const char* argv[] ){
             dev = info ;
         }
         else if( attr == "print" ){
-            print = true ;
+            if( info == "off" ) print = ePrintNone ;
+            else if( info == "on" ) print = ePrint ;
+            else if( info == "full" ) print = ePrintFull ;
+            else{
+                IPPMException except("print option is on, off or full. now="+info) ;
+                throw except ;
+            };
         }
         else{
             IPPMException except("illegal parameter ="+attr) ;
@@ -82,4 +88,8 @@ Config::Config( int argc, const char* argv[] ){
     };
     
     sender = new Sender( foward ) ;
+}
+
+Config::~Config(){
+    delete(sender) ;
 }

@@ -38,9 +38,14 @@ public:
     */
     std::string protocol ;
     
-    bool print ;
+    enum ePrint {
+        ePrintNone = 0 ,
+        ePrint = 1,
+        ePrintFull =2
+    } print ;
     
     Config( int argc, const char* argv[] ) ;
+    ~Config() ;
     
 };
 

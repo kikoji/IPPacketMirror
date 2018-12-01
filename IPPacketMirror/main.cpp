@@ -24,6 +24,7 @@ void analyzeUDPPacket( const Config& cf, char *p, unsigned int udpLength){
     
     if( cf.source.port != 0 && cf.source.port != udp->uh_sport ) return ;
     if( cf.destination.port != 0 && cf.destination.port != udp->uh_dport ) return ;
+    cf.sender->printQueuePort( udp->uh_sport, udp->uh_dport ) ;
     
     p += 8 ;
     unsigned int payloadLength = udpLength - 8 ;
@@ -36,6 +37,7 @@ void analyzeTCPPacket( const Config& cf, char *p, unsigned int tcpLength){
     
     if( cf.source.port != 0 && cf.source.port != tcp->th_sport ) return ;
     if( cf.destination.port != 0 && cf.destination.port != tcp->th_dport ) return ;
+    cf.sender->printQueuePort( tcp->th_sport, tcp->th_dport ) ;
     
     p += tcp->th_off * 4 ;
     unsigned int payloadLength = tcpLength - tcp->th_off * 4 ;
@@ -49,6 +51,7 @@ void analyzeIPPacket( const Config& cf, char *p)
     
     if( cf.source.addr.s_addr != 0 && cf.source.addr.s_addr != ip->ip_src.s_addr ) return ;
     if( cf.destination.addr.s_addr != 0 && cf.destination.addr.s_addr != ip->ip_dst.s_addr ) return ;
+    cf.sender->printQueueAddr( ip->ip_src, ip->ip_dst ) ;
     
     p +=  ip->ip_hl * 4 ;
     unsigned int payloadLength = ntohs(ip->ip_len) - ip->ip_hl * 4 ;
@@ -66,8 +69,11 @@ void analyzeIPPacket( const Config& cf, char *p)
     };
 }
 
-// command zzz.zzz.zzz.zzz:www dst=xxx.xxx.xxx.xxx:pp src=:qq
 int main(int argc, const char * argv[]) {
+    // refeence code
+    // https://netwiz.jp/tcpip/write_packetcapture.html
+    // Thank you.
+    
     try {
         Config config( argc, argv ) ;
         
