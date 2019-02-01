@@ -13,6 +13,8 @@
 #include <arpa/inet.h>
 #include <netinet/tcp.h>
 #include <netinet/udp.h>
+//#include <sys/socket.h>
+//#include <net/if_dl.h>
 
 #include "Config.hpp"
 #include "IPPMException.hpp"
@@ -90,11 +92,13 @@ int main(int argc, const char * argv[]) {
         }
 
         /* イーサネットのみ */
+        /*
         if (pcap_datalink(handle) != DLT_EN10MB) {
             //fprintf(stderr, "Device not support: %s\n", dev);
             IPPMException ex("Device not support:"+config.dev) ;
             throw ex ;
         }
+        */
         
         /* プロトコルの設定をおこなう */
         struct bpf_program fp;
@@ -113,12 +117,13 @@ int main(int argc, const char * argv[]) {
         /* ループでパケットを受信 */
         struct pcap_pkthdr header;
         const unsigned char *packet;
+        int l1headerSize = sizeof(struct ether_header) ;
+        if( config.dev.substr(0,2) == "lo" ) l1headerSize = 4 ;
         while (1) {
             if ((packet = pcap_next(handle, &header)) == NULL) continue;
             /* イーサネットヘッダーとIPヘッダーの合計サイズに満たなければ無視 */
-            if (header.len < sizeof(struct ether_header)+sizeof(struct ip)) continue;
-            //print_ipheader((char *)(packet+sizeof(struct ether_header)));
-            analyzeIPPacket( config, (char *)(packet+sizeof(struct ether_header)) ) ;
+            if (header.len < l1headerSize+sizeof(struct ip)) continue;
+            analyzeIPPacket( config, (char *)(packet+l1headerSize) ) ;
         }
         pcap_close(handle);
     }
